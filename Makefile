@@ -4,7 +4,7 @@ HEADER		=	inc/
 
 CC			=	cc
 
-CFLAGS		=	 -Werror -Wall -Wextra -g -I $(HEADER)  #-fsanitize=address
+CFLAGS		=	 -Werror -Wall -Wextra -g -I $(HEADER)  -fsanitize=thread 
 
 SRCS		=	srcs/main.c \
 
