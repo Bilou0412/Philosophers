@@ -1,6 +1,7 @@
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <ctype.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -13,5 +14,14 @@ typedef struct s_philo
 	pthread_mutex_t	mutex1;
 	int				nb;
 }					t_philo;
+
+/*----------------check_arg.c-----------------*/
+
+int					invalid_arg(char **arg);
+
+/*----------------utils-----------------------*/
+
+int					ft_atoi(const char *str);
+int					ft_isdigit(int c);
 
 #endif

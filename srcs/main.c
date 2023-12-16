@@ -30,8 +30,8 @@ void	*func2(void *philo)
 
 int	main(int argc, char **argv)
 {
-	if (argc < 5)
-		return (printf("Program take the following arguments:\n number_of_philosophers\n time_to_die\n time_to_eat\n time_to_sleep\n [number_of_times_each_philosopher_must_eat]\n"),
+	if (argc < 5 || argc > 6 || invalid_arg(argv))
+		return (printf("Program take the following arguments:\n number_of_philosophers : [MIN 1 ; MAX 200]\n time_to_die : MIN 1 \n time_to_eat : MIN 1\n time_to_sleep : MIN 1\n [number_of_times_each_philosopher_must_eat]\n"),
 			0);
 	(void)argv;
 	pthread_t t1;
