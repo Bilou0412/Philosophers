@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:37:17 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/16 19:14:10 by bmoudach         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:19:46 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	invalid_arg(char **arg)
 			character++;
 		}
 		if ((ft_atoi(arg[array]) == 0 && array < 5)
-			|| (ft_atoi(arg[array]) > 200 && array == 1))
+			|| (ft_atoi(arg[array]) > 1000 && array == 1))
 			return (1);
 		character = 0;
 		array++;

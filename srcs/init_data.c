@@ -1,5 +1,6 @@
 #include "philo.h"
 
+
 void	init_data_from_arg(t_philo philo[], t_mutex_and_death_f *mutex_death_f,
 		char **arg)
 {
@@ -14,10 +15,12 @@ void	init_data_from_arg(t_philo philo[], t_mutex_and_death_f *mutex_death_f,
 		philo[i].time_to_die = ft_atoi(arg[2]);
 		philo[i].time_to_eat = ft_atoi(arg[3]);
 		philo[i].time_to_sleep = ft_atoi(arg[4]);
-		philo[i].number_of_times_each_philosopher_must_eat = 0;
+		philo[i].number_of_times_each_philosopher_must_eat = -1;
+		if (arg[5])
+			philo[i].number_of_times_each_philosopher_must_eat = ft_atoi(arg[5]);
 		philo[i].nb_eat = 0;
-		philo[i].last_eating = 0;
 		philo[i].start = get_current_time();
+		philo[i].last_eating = get_current_time();
 		pthread_mutex_init(&philo->mutex_fork_left, NULL);
 		i++;
 	}
@@ -37,10 +40,11 @@ int	init_data_mutex_and_thread(t_philo philo[],
 	{
 		if (i == 0)
 		{
-			philo[i].mutex_fork_right = &philo[philo[i].number_of_philosophers - 1].mutex_fork_left;
+			philo[i].mutex_fork_right = &philo[philo[i].number_of_philosophers
+				- 1].mutex_fork_left;
 		}
 		else
-			philo[i].mutex_fork_right = &philo[i + 1].mutex_fork_left;
+			philo[i].mutex_fork_right = &philo[i - 1].mutex_fork_left;
 		philo[i].mutex_eat = &mutex_death_f->mutex_eat;
 		philo[i].mutex_write = &mutex_death_f->mutex_write;
 		philo[i].mutex_death = &mutex_death_f->mutex_death;

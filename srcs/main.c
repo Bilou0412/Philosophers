@@ -19,11 +19,12 @@ void	*routine(void *philo)
 	t_philo	*philo_cast;
 
 	philo_cast = (t_philo *)philo;
-	if (philo_cast->id % 2 == 0)
-		ft_usleep(1);
 	while (1)
 	{
-		philo_eat(philo_cast);
+		if (philo_cast->id % 2 == 0)
+			philo_eat(philo_cast);
+		else
+			philo_eat_odd(philo_cast);
 		philo_sleep(philo_cast);
 	}
 	return (NULL);
@@ -31,7 +32,7 @@ void	*routine(void *philo)
 int	main(int argc, char **argv)
 {
 	int i;
-	t_philo philo[250];
+	t_philo philo[1000];
 	t_mutex_and_death_f mutex_death_f;
 
 	mutex_death_f.death = 0;
