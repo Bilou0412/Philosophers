@@ -6,12 +6,11 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 23:11:00 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/22 16:48:22 by bmoudach         ###   ########.fr       */
+/*   Updated: 2023/12/22 20:27:28 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 void	philo_write(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(philo->mutex_write);
@@ -34,7 +33,7 @@ void	philo_eat(t_philo *philo)
 	philo_write(philo, "has taken a fork");
 	philo_write(philo, "is eating");
 	pthread_mutex_lock(philo->mutex_eat);
-	philo->nb_eat++;
+	*philo->m_eat = *philo->m_eat + 1;
 	pthread_mutex_unlock(philo->mutex_eat);
 	ft_usleep(philo->time_to_eat, philo);
 	philo->last_eating = get_current_time();
@@ -55,7 +54,7 @@ void	philo_eat_odd(t_philo *philo)
 	philo_write(philo, "has taken a fork");
 	philo_write(philo, "is eating");
 	pthread_mutex_lock(philo->mutex_eat);
-	philo->nb_eat++;
+	*philo->m_eat = *philo->m_eat + 1;
 	pthread_mutex_unlock(philo->mutex_eat);
 	ft_usleep(philo->time_to_eat, philo);
 	philo->last_eating = get_current_time();

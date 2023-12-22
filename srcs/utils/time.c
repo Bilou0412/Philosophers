@@ -22,22 +22,27 @@ size_t	get_current_time(void)
 }
 int	ft_usleep(size_t milliseconds, t_philo *philo)
 {
-	size_t start;
+	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
 	{
 		pthread_mutex_lock(philo->mutex_eat);
-
-		if ((get_current_time() - philo->last_eating) >= philo->time_to_die)
+		if ((get_current_time() - philo->last_eating) > philo->time_to_die)
 		{
 			pthread_mutex_unlock(philo->mutex_eat);
 			philo_write(philo, "died");
 			pthread_mutex_lock(philo->mutex_death);
 			*philo->death = 1;
 			pthread_mutex_unlock(philo->mutex_death);
-
 			pthread_mutex_lock(philo->mutex_eat);
+		}
+		pthread_mutex_unlock(philo->mutex_eat);
+		pthread_mutex_lock(philo->mutex_eat);
+		if (*philo->m_eat > philo->number_of_philosophers
+			* philo->number_of_times_each_philosopher_must_eat)
+		{
+			*philo->eat_finish = 1;
 		}
 		pthread_mutex_unlock(philo->mutex_eat);
 		usleep(500);

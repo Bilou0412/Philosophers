@@ -17,11 +17,11 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				id;
 	int				number_of_philosophers;
-	int				nb_eat;
+	size_t			time_philo_is_dead;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	size_t			number_of_times_each_philosopher_must_eat;
+	int				number_of_times_each_philosopher_must_eat;
 	size_t			start;
 	size_t			last_eating;
 	pthread_mutex_t	mutex_fork_left;
@@ -30,6 +30,8 @@ typedef struct s_philo
 	pthread_mutex_t	*mutex_eat;
 	pthread_mutex_t	*mutex_write;
 	bool			*death;
+	int				*m_eat;
+	bool			*eat_finish;
 }					t_philo;
 
 typedef struct s_mutex_and_death_f
@@ -38,6 +40,8 @@ typedef struct s_mutex_and_death_f
 	pthread_mutex_t	mutex_eat;
 	pthread_mutex_t	mutex_write;
 	bool			death;
+	int				m_eat;
+	bool			eat_finish;
 }					t_mutex_and_death_f;
 /*----------------check_arg.c-----------------*/
 
@@ -62,5 +66,6 @@ void				philo_eat_odd(t_philo *philo);
 
 /*----------------main.c-----------------------*/
 
+int					destroy_mutex(t_mutex_and_death_f *mutex_death_f);
 void				*routine(void *philo);
 #endif

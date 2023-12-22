@@ -4,7 +4,7 @@ HEADER		=	inc/
 
 CC			=	cc
 
-CFLAGS		=	 -Werror -Wall -Wextra -g -O3 -I $(HEADER)  #-fsanitize=thread  
+CFLAGS		=	 -Werror -Wall -Wextra -g -O3 -I $(HEADER) -fsanitize=thread  
 
 SRCS		=	srcs/main.c \
 				srcs/init_data.c \
@@ -13,6 +13,7 @@ SRCS		=	srcs/main.c \
 				srcs/utils/ft_atoi.c \
 				srcs/utils/ft_isdigit.c \
 				srcs/utils/time.c \
+				srcs/utils/destroy.c \
 				
 
 OBJS		=	$(SRCS:.c=.o)
