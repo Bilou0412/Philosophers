@@ -19,14 +19,18 @@ void	*routine(void *philo)
 	t_philo	*philo_cast;
 
 	philo_cast = (t_philo *)philo;
-	while (1)
+	pthread_mutex_lock(philo_cast->mutex_death);
+	while (!(*(philo_cast->death)))
 	{
+		pthread_mutex_unlock(philo_cast->mutex_death);
 		if (philo_cast->id % 2 == 0)
 			philo_eat(philo_cast);
 		else
 			philo_eat_odd(philo_cast);
 		philo_sleep(philo_cast);
+		pthread_mutex_lock(philo_cast->mutex_death);
 	}
+	pthread_mutex_unlock(philo_cast->mutex_death);
 	return (NULL);
 }
 int	main(int argc, char **argv)

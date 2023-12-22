@@ -49,7 +49,7 @@ int					init_data(t_philo philo[],
 						t_mutex_and_death_f *mutex_death_f, char **arg);
 bool				ft_isdigit(int c);
 size_t				get_current_time(void);
-int					ft_usleep(size_t milliseconds);
+int					ft_usleep(size_t milliseconds, t_philo *philo);
 /*----------------action.c-----------------------*/
 
 void				philo_write(t_philo *philo, char *str);
