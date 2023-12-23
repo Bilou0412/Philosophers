@@ -24,13 +24,13 @@ typedef struct s_philo
 	int				number_of_times_each_philosopher_must_eat;
 	size_t			start;
 	size_t			last_eating;
+	int				nb_eat;
 	pthread_mutex_t	mutex_fork_left;
 	pthread_mutex_t	*mutex_fork_right;
 	pthread_mutex_t	*mutex_death;
 	pthread_mutex_t	*mutex_eat;
 	pthread_mutex_t	*mutex_write;
 	bool			*death;
-	int				*m_eat;
 	bool			*eat_finish;
 }					t_philo;
 
@@ -40,7 +40,6 @@ typedef struct s_mutex_and_death_f
 	pthread_mutex_t	mutex_eat;
 	pthread_mutex_t	mutex_write;
 	bool			death;
-	int				m_eat;
 	bool			eat_finish;
 }					t_mutex_and_death_f;
 /*----------------check_arg.c-----------------*/
@@ -53,7 +52,6 @@ int					init_data(t_philo philo[],
 						t_mutex_and_death_f *mutex_death_f, char **arg);
 bool				ft_isdigit(int c);
 size_t				get_current_time(void);
-int					ft_usleep(size_t milliseconds, t_philo *philo);
 /*----------------action.c-----------------------*/
 
 void				philo_write(t_philo *philo, char *str);
@@ -67,5 +65,7 @@ void				philo_eat_odd(t_philo *philo);
 /*----------------main.c-----------------------*/
 
 int					destroy_mutex(t_mutex_and_death_f *mutex_death_f);
+void				*monitor(t_philo *philo);
+int					ft_usleep(size_t milliseconds);
 void				*routine(void *philo);
 #endif
