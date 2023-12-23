@@ -39,6 +39,12 @@ int	init_data_mutex_and_thread(t_philo philo[],
 		return (-1);
 	while (i < philo->number_of_philosophers)
 	{
+		pthread_mutex_init(&philo[i].mutex_fork_left, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < philo->number_of_philosophers)
+	{
 		if (i == 0)
 		{
 			philo[i].mutex_fork_right = &philo[philo[i].number_of_philosophers

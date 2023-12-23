@@ -27,9 +27,19 @@ int	ft_usleep(size_t milliseconds, t_philo *philo)
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
 	{
+		//pthread_mutex_lock(philo->mutex_write);
+		//printf("%lu %lu %d\n", get_current_time() - philo->last_eating,
+		//	philo->time_to_die,philo->id);
+		//printf("%lu %d \n", (get_current_time() - philo->start), philo->id);
+	//	pthread_mutex_unlock(philo->mutex_write);
 		pthread_mutex_lock(philo->mutex_eat);
-		if ((get_current_time() - philo->last_eating) > philo->time_to_die)
+		if ((get_current_time() - philo->last_eating) >= philo->time_to_die)
 		{
+			//pthread_mutex_lock(philo->mutex_write);
+			//printf("%lu %lu\n", get_current_time() - philo->last_eating,
+				//philo->time_to_die);
+			//printf("%lu \n", (get_current_time() - philo->start));
+			//pthread_mutex_unlock(philo->mutex_write);
 			pthread_mutex_unlock(philo->mutex_eat);
 			philo_write(philo, "died");
 			pthread_mutex_lock(philo->mutex_death);
@@ -39,7 +49,7 @@ int	ft_usleep(size_t milliseconds, t_philo *philo)
 		}
 		pthread_mutex_unlock(philo->mutex_eat);
 		pthread_mutex_lock(philo->mutex_eat);
-		if (*philo->m_eat > philo->number_of_philosophers
+		if (*philo->m_eat - philo->number_of_philosophers > philo->number_of_philosophers
 			* philo->number_of_times_each_philosopher_must_eat)
 		{
 			*philo->eat_finish = 1;

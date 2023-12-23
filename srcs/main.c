@@ -41,7 +41,7 @@ void	*routine(void *philo)
 int	main(int argc, char **argv)
 {
 	int i;
-	t_philo philo[1000];
+	t_philo philo[200];
 	t_mutex_and_death_f mutex_death_f;
 
 	mutex_death_f.death = 0;

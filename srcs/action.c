@@ -6,11 +6,12 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 23:11:00 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/22 20:27:28 by bmoudach         ###   ########.fr       */
+/*   Updated: 2023/12/23 15:51:56 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 void	philo_write(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(philo->mutex_write);
@@ -27,6 +28,8 @@ void	philo_write(t_philo *philo, char *str)
 }
 void	philo_eat(t_philo *philo)
 {
+	size_t	new_time;
+
 	pthread_mutex_lock(philo->mutex_fork_right);
 	philo_write(philo, "has taken a fork");
 	pthread_mutex_lock(&(philo->mutex_fork_left));
@@ -35,13 +38,16 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(philo->mutex_eat);
 	*philo->m_eat = *philo->m_eat + 1;
 	pthread_mutex_unlock(philo->mutex_eat);
+	new_time = get_current_time();
+	philo->last_eating = new_time;
 	ft_usleep(philo->time_to_eat, philo);
-	philo->last_eating = get_current_time();
 	pthread_mutex_unlock(&(philo->mutex_fork_left));
 	pthread_mutex_unlock(philo->mutex_fork_right);
 }
 void	philo_eat_odd(t_philo *philo)
 {
+	size_t	new_time;
+
 	pthread_mutex_lock(&philo->mutex_fork_left);
 	philo_write(philo, "has taken a fork");
 	if (philo->number_of_philosophers == 1)
@@ -56,8 +62,9 @@ void	philo_eat_odd(t_philo *philo)
 	pthread_mutex_lock(philo->mutex_eat);
 	*philo->m_eat = *philo->m_eat + 1;
 	pthread_mutex_unlock(philo->mutex_eat);
+	new_time = get_current_time();
+	philo->last_eating = new_time;
 	ft_usleep(philo->time_to_eat, philo);
-	philo->last_eating = get_current_time();
 	pthread_mutex_unlock(philo->mutex_fork_right);
 	pthread_mutex_unlock(&(philo->mutex_fork_left));
 }
