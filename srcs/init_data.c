@@ -35,7 +35,8 @@ int	init_data_mutex_and_thread(t_philo philo[],
 	i = 0;
 	if (pthread_mutex_init((&mutex_death_f->mutex_death), NULL)
 		|| pthread_mutex_init(&mutex_death_f->mutex_eat, NULL)
-		|| pthread_mutex_init(&mutex_death_f->mutex_write, NULL))
+		|| pthread_mutex_init(&mutex_death_f->mutex_write, NULL)
+		|| pthread_mutex_init(&mutex_death_f->mutex_start,NULL))
 		return (-1);
 	while (i < philo->number_of_philosophers)
 	{
@@ -47,19 +48,19 @@ int	init_data_mutex_and_thread(t_philo philo[],
 	{
 		if (i == 0)
 		{
-			philo[i].mutex_fork_right = &philo[philo[i].number_of_philosophers
-				- 1].mutex_fork_left;
+			philo[i].mutex_fork_right = &philo[philo[i].number_of_philosophers- 1].mutex_fork_left;
 		}
 		else
 			philo[i].mutex_fork_right = &philo[i - 1].mutex_fork_left;
 		philo[i].mutex_eat = &mutex_death_f->mutex_eat;
 		philo[i].mutex_write = &mutex_death_f->mutex_write;
 		philo[i].mutex_death = &mutex_death_f->mutex_death;
+		philo[i].mutex_start = &mutex_death_f->mutex_start;
 		if (pthread_create(&philo[i].thread, NULL, (void *)&routine, &philo[i]))
 			return (-1);
 		i++;
 	}
-
+	usleep(1000);
 	return (0);
 }
 

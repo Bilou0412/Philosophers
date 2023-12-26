@@ -32,18 +32,36 @@ void	philo_write(t_philo *philo, char *str)
 }
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->mutex_fork_right);
+	if (philo->id == philo->number_of_philosophers)
+		pthread_mutex_lock(&philo->mutex_fork_left);
+	else
+		pthread_mutex_lock(philo->mutex_fork_right);
 	philo_write(philo, "has taken a fork");
-	pthread_mutex_lock(&(philo->mutex_fork_left));
+	if (philo->number_of_philosophers == 1)
+	{
+		ft_usleep(philo->time_to_die, philo);
+		pthread_mutex_unlock(philo->mutex_fork_right);
+		return ;
+	}
+	if (philo->id == philo->number_of_philosophers)
+		pthread_mutex_lock(philo->mutex_fork_right);
+	else
+		pthread_mutex_lock(&(philo->mutex_fork_left));
 	philo_write(philo, "has taken a fork");
 	philo_write(philo, "is eating");
 	pthread_mutex_lock(philo->mutex_eat);
-	philo->nb_eat++;
-	ft_usleep(philo->time_to_eat);
 	philo->last_eating = get_current_time();
+	philo->nb_eat++;
 	pthread_mutex_unlock(philo->mutex_eat);
-	pthread_mutex_unlock(&(philo->mutex_fork_left));
-	pthread_mutex_unlock(philo->mutex_fork_right);
+	ft_usleep(philo->time_to_eat, philo);
+	if (philo->id == philo->number_of_philosophers)
+		pthread_mutex_unlock(philo->mutex_fork_right);
+	else
+		pthread_mutex_unlock(&(philo->mutex_fork_left));
+	if (philo->id == philo->number_of_philosophers)
+		pthread_mutex_unlock(&(philo->mutex_fork_left));
+	else
+		pthread_mutex_unlock(philo->mutex_fork_right);
 }
 void	philo_eat_odd(t_philo *philo)
 {
@@ -51,7 +69,7 @@ void	philo_eat_odd(t_philo *philo)
 	philo_write(philo, "has taken a fork");
 	if (philo->number_of_philosophers == 1)
 	{
-		ft_usleep(philo->time_to_die);
+		ft_usleep(philo->time_to_die, philo);
 		pthread_mutex_unlock(philo->mutex_fork_right);
 		return ;
 	}
@@ -59,17 +77,20 @@ void	philo_eat_odd(t_philo *philo)
 	philo_write(philo, "has taken a fork");
 	philo_write(philo, "is eating");
 	pthread_mutex_lock(philo->mutex_eat);
-	philo->nb_eat++;
-	ft_usleep(philo->time_to_eat);
 	philo->last_eating = get_current_time();
+	philo->nb_eat++;
 	pthread_mutex_unlock(philo->mutex_eat);
+	ft_usleep(philo->time_to_eat, philo);
 	pthread_mutex_unlock(philo->mutex_fork_right);
 	pthread_mutex_unlock(&(philo->mutex_fork_left));
 }
 void	philo_sleep(t_philo *philo)
 {
 	philo_write(philo, "is sleeping");
-	ft_usleep(philo->time_to_sleep);
+	ft_usleep(philo->time_to_sleep, philo);
 	philo_write(philo, "is thinking");
-	ft_usleep(1);
+	if (philo->id % 2 == 0)
+		ft_usleep(50, philo);
+	else
+		ft_usleep(1, philo);
 }

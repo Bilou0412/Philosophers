@@ -1,5 +1,13 @@
 #include "philo.h"
 
+int	dead_loop(t_philo *philo)
+{
+	pthread_mutex_lock(philo->mutex_death);
+	if (*philo->death == 1)
+		return (pthread_mutex_unlock(philo->mutex_death), 1);
+	pthread_mutex_unlock(philo->mutex_death);
+	return (0);
+}
 int	wait_philo(t_philo philo[])
 {
 	int	i;
@@ -20,30 +28,19 @@ void	*routine(void *philo)
 
 	philo_cast = (t_philo *)philo;
 	if (philo_cast->id % 2 == 0)
-		usleep(500);
-	pthread_mutex_lock(philo_cast->mutex_death);
-	pthread_mutex_lock(philo_cast->mutex_eat);
-	while (!*(philo_cast->death) && (!*(philo_cast->eat_finish)
+		ft_usleep(1, philo);
+	while (!dead_loop(philo) && (!*(philo_cast->eat_finish)
 			|| philo_cast->number_of_times_each_philosopher_must_eat == -1))
 	{
-		pthread_mutex_unlock(philo_cast->mutex_eat);
-		pthread_mutex_unlock(philo_cast->mutex_death);
-		if (philo_cast->id % 2 == 0)
-			philo_eat(philo_cast);
-		else
-			philo_eat_odd(philo_cast);
+		philo_eat(philo_cast);
 		philo_sleep(philo_cast);
-		pthread_mutex_lock(philo_cast->mutex_death);
-		pthread_mutex_lock(philo_cast->mutex_eat);
 	}
-	pthread_mutex_unlock(philo_cast->mutex_eat);
-	pthread_mutex_unlock(philo_cast->mutex_death);
 	return (NULL);
 }
 int	main(int argc, char **argv)
 {
 	int i;
-	t_philo philo[200];
+	t_philo philo[300];
 	t_mutex_and_death_f mutex_death_f;
 	pthread_t monitoring;
 
@@ -59,5 +56,6 @@ int	main(int argc, char **argv)
 	pthread_join(monitoring, NULL);
 	if (wait_philo(philo) < 0)
 		return (-1);
+
 	return (0);
 }
