@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:27:10 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/27 15:41:40 by bmoudach         ###   ########.fr       */
+/*   Updated: 2023/12/27 16:51:40 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*monitor(t_philo *philo)
 	{
 		if (is_dead(philo) || (finish_eat(philo)))
 			break ;
-		usleep(900);
+		//usleep(900);
 	}
 	return (philo);
 }
@@ -94,15 +94,31 @@ size_t	get_current_time(void)
 int	ft_usleep(size_t milliseconds, t_philo *philo)
 {
 	size_t	start;
+	int		i;
 
 	start = get_current_time();
 	pthread_mutex_lock(philo->mutex_death);
-	while ((get_current_time() - start) < milliseconds && *philo->death == 0&& *philo->eat_finish == 0)
+	while ((get_current_time() - start) < milliseconds  && *philo->death == 0
+		&& *philo->eat_finish == 0)
 	{
 		pthread_mutex_unlock(philo->mutex_death);
-		usleep(500);
+		usleep(1000);
 		pthread_mutex_lock(philo->mutex_death);
 	}
+	// while ((get_current_time() - start + 9) < milliseconds && *philo->death == 0
+	// 	&& *philo->eat_finish == 0)
+	// {
+	// 	pthread_mutex_unlock(philo->mutex_death);
+	// 	usleep(9000);
+	// 	pthread_mutex_lock(philo->mutex_death);
+	// }
+	// while ((get_current_time() - start) < milliseconds && *philo->death == 0
+	// 	&& *philo->eat_finish == 0)
+	// {
+	// 	pthread_mutex_unlock(philo->mutex_death);
+	// 	usleep(1000);
+	// 	pthread_mutex_lock(philo->mutex_death);
+	// }
 	pthread_mutex_unlock(philo->mutex_death);
 	return (0);
 }
