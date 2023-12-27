@@ -6,15 +6,15 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:02:39 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/27 11:05:47 by bmoudach         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:26:59 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* Convert a string to an integer.  */
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	signe;
+	int					i;
+	int					signe;
 	unsigned long long	base;
 
 	base = 0;
@@ -37,4 +37,3 @@ int	ft_atoi(const char *str)
 	}
 	return (base * signe);
 }
-

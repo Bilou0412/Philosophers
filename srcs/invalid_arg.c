@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 13:37:17 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/27 11:07:35by bmoudach         ###   ########.fr       */
+/*   Created: 2023/12/27 11:56:37 by bmoudach          #+#    #+#             */
+/*   Updated: 2023/12/27 11:56:40 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	invalid_arg(char **arg)
 		}
 		if ((ft_atoi(arg[array]) == 0 && array < 5)
 			|| (ft_atoi(arg[array]) > 200 && array == 1)
-			||ft_atoi(arg[array]) <= 0)
+			|| ft_atoi(arg[array]) <= 0)
 			return (1);
 		character = 0;
 		array++;
