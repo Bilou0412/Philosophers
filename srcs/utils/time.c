@@ -87,7 +87,7 @@ int	ft_usleep(size_t milliseconds, t_philo *philo)
 
 	start = get_current_time();
 	pthread_mutex_lock(philo->mutex_death);
-	while ((get_current_time() - start) < milliseconds && !*philo->death)
+	while ((get_current_time() - start) < milliseconds && *philo->death == 0)
 	{
 		pthread_mutex_unlock(philo->mutex_death);
 		usleep(500);

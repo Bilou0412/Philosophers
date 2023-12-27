@@ -6,7 +6,7 @@
 /*   By: bmoudach <bmoudach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:02:39 by bmoudach          #+#    #+#             */
-/*   Updated: 2023/12/16 13:40:08 by bmoudach         ###   ########.fr       */
+/*   Updated: 2023/12/27 11:05:47 by bmoudach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ int	ft_atoi(const char *str)
 {
 	int	i;
 	int	signe;
-	int	base;
+	unsigned long long	base;
 
 	base = 0;
 	signe = 1;

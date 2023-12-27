@@ -26,8 +26,8 @@ typedef struct s_philo
 	size_t			start;
 	size_t			last_eating;
 	int				nb_eat;
-	pthread_mutex_t	mutex_fork_left;
-	pthread_mutex_t	*mutex_fork_right;
+	pthread_mutex_t	*mutex_fork_left;
+	pthread_mutex_t	mutex_fork_right;
 	pthread_mutex_t	*mutex_death;
 	pthread_mutex_t	*mutex_eat;
 	pthread_mutex_t	*mutex_write;
@@ -70,5 +70,8 @@ void				philo_eat_odd(t_philo *philo);
 int					destroy_mutex(t_mutex_and_death_f *mutex_death_f);
 void				*monitor(t_philo *philo);
 int					ft_usleep(size_t milliseconds, t_philo *philo);
+int	check_eat_dead(t_philo *philo);
+int	dead_loop(t_philo *philo);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void				*routine(void *philo);
 #endif

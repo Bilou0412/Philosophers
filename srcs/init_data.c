@@ -22,7 +22,6 @@ void	init_data_from_arg(t_philo philo[], t_mutex_and_death_f *mutex_death_f,
 		philo[i].time_philo_is_dead = 0;
 		philo[i].start = get_current_time();
 		philo[i].last_eating = get_current_time();
-		pthread_mutex_init(&philo->mutex_fork_left, NULL);
 		i++;
 	}
 }
@@ -36,22 +35,22 @@ int	init_data_mutex_and_thread(t_philo philo[],
 	if (pthread_mutex_init((&mutex_death_f->mutex_death), NULL)
 		|| pthread_mutex_init(&mutex_death_f->mutex_eat, NULL)
 		|| pthread_mutex_init(&mutex_death_f->mutex_write, NULL)
-		|| pthread_mutex_init(&mutex_death_f->mutex_start,NULL))
+		|| pthread_mutex_init(&mutex_death_f->mutex_start, NULL))
 		return (-1);
 	while (i < philo->number_of_philosophers)
 	{
-		pthread_mutex_init(&philo[i].mutex_fork_left, NULL);
+		pthread_mutex_init(&philo[i].mutex_fork_right, NULL);
 		i++;
 	}
 	i = 0;
 	while (i < philo->number_of_philosophers)
 	{
-		if (i == 0)
+		if (i + 1 == philo->number_of_philosophers)
 		{
-			philo[i].mutex_fork_right = &philo[philo[i].number_of_philosophers- 1].mutex_fork_left;
+			philo[i].mutex_fork_left = &philo[0].mutex_fork_right;
 		}
 		else
-			philo[i].mutex_fork_right = &philo[i - 1].mutex_fork_left;
+			philo[i].mutex_fork_left = &philo[i + 1].mutex_fork_right;
 		philo[i].mutex_eat = &mutex_death_f->mutex_eat;
 		philo[i].mutex_write = &mutex_death_f->mutex_write;
 		philo[i].mutex_death = &mutex_death_f->mutex_death;
@@ -60,7 +59,7 @@ int	init_data_mutex_and_thread(t_philo philo[],
 			return (-1);
 		i++;
 	}
-	usleep(1000);
+	usleep(500);
 	return (0);
 }
 

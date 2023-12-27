@@ -32,7 +32,10 @@ void	*routine(void *philo)
 	while (!dead_loop(philo) && (!*(philo_cast->eat_finish)
 			|| philo_cast->number_of_times_each_philosopher_must_eat == -1))
 	{
-		philo_eat(philo_cast);
+		if (philo_cast->id % 2 == 0)
+			philo_eat(philo_cast);
+		else
+			philo_eat_odd(philo_cast);
 		philo_sleep(philo_cast);
 	}
 	return (NULL);
